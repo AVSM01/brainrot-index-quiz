@@ -224,8 +224,8 @@ class AIMarketingGenerator {
 // RUN GENERATOR
 // ============================================
 
-// Update this URL after deploying to Vercel!
-const SITE_URL = 'https://brainrot-index.vercel.app';
+// Your LIVE site URL!
+const SITE_URL = 'https://brainrot-index-quiz.vercel.app';
 
 const generator = new AIMarketingGenerator(SITE_URL);
 generator.generateAllContent();
