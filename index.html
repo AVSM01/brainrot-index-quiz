@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainrot Index™ | How Cooked Is Your Brain?</title>
+    <meta name="description"
+        content="Take the ultimate brainrot quiz and discover your internet brain damage level. Are you a normie or terminally online?">
+    <meta name="keywords" content="brainrot, quiz, skibidi, sigma, gen z, personality test, viral quiz, ohio, rizz">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="Brainrot Index™ | My Brain is X% Cooked">
+    <meta property="og:description" content="I took the Brainrot Index quiz. How rotted is YOUR brain? 🧠🔥">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brainrot-index.vercel.app">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Brainrot Index™ | How Cooked Is Your Brain?">
+    <meta name="twitter:description" content="Take the quiz to find your brainrot level 🧠💀">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+
+    <!-- Google Analytics - Replace G-XXXXXXXXXX with your actual ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+
+        // Custom events for tracking
+        function trackQuizStart() { gtag('event', 'quiz_start'); }
+        function trackQuizComplete(score) { gtag('event', 'quiz_complete', { score: score }); }
+        function trackPremiumClick() { gtag('event', 'premium_click'); }
+        function trackShare(platform) { gtag('event', 'share', { platform: platform }); }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-effects">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section id="hero" class="section active">
+            <div class="hero-content">
+                <div class="logo-badge">
+                    <span class="emoji-rotate">🧠</span>
+                    <span class="badge-text">2024 OXFORD WORD OF THE YEAR</span>
+                </div>
+                <h1 class="glitch-text" data-text="BRAINROT INDEX™">BRAINROT INDEX™</h1>
+                <p class="tagline">How <span class="highlight">cooked</span> is your brain from the internet?</p>
+
+                <div class="meter-container">
+                    <div class="meter-labels">
+                        <span>NORMIE</span>
+                        <span>TERMINAL</span>
+                    </div>
+                    <div class="brainrot-meter">
+                        <div class="meter-fill" id="heroMeter"></div>
+                        <div class="meter-glow"></div>
+                    </div>
+                </div>
+
+                <button class="cta-button" onclick="startQuiz()">
+                    <span class="btn-text">CALCULATE MY BRAINROT</span>
+                    <span class="btn-icon">→</span>
+                    <div class="btn-shimmer"></div>
+                </button>
+
+                <div class="social-proof">
+                    <div class="avatars">
+                        <div class="avatar">😵‍💫</div>
+                        <div class="avatar">🤯</div>
+                        <div class="avatar">💀</div>
+                    </div>
+                    <span><strong>2.4M+</strong> brains analyzed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">1/10</span>
+                    </div>
+                    <button class="quit-btn" onclick="quitQuiz()">✕</button>
+                </div>
+
+                <div class="question-card" id="questionCard">
+                    <div class="question-number" id="questionNumber">Q1</div>
+                    <h2 class="question-text" id="questionText">Loading question...</h2>
+
+                    <div class="options-grid" id="optionsGrid">
+                        <!-- Options populated by JS -->
+                    </div>
+                </div>
+
+                <div class="quiz-footer">
+                    <div class="timer-bar">
+                        <div class="timer-fill" id="timerFill"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <div class="results-container">
+                <div class="result-card" id="resultCard">
+                    <div class="result-header">
+                        <span class="result-label">YOUR BRAINROT LEVEL</span>
+                        <div class="result-score">
+                            <span class="score-number" id="scoreNumber">0</span>
+                            <span class="score-percent">%</span>
+                        </div>
+                    </div>
+
+                    <div class="result-tier" id="resultTier">
+                        <span class="tier-emoji" id="tierEmoji">🧠</span>
+                        <h2 class="tier-title" id="tierTitle">Loading...</h2>
+                        <p class="tier-description" id="tierDescription">Calculating your damage...</p>
+                    </div>
+
+                    <div class="result-meter">
+                        <div class="meter-track">
+                            <div class="meter-fill" id="resultMeter"></div>
+                            <div class="meter-indicator" id="meterIndicator">▼</div>
+                        </div>
+                        <div class="meter-labels">
+                            <span>0</span>
+                            <span>25</span>
+                            <span>50</span>
+                            <span>75</span>
+                            <span>100</span>
+                        </div>
+                    </div>
+
+                    <div class="result-badges" id="resultBadges">
+                        <!-- Badges populated by JS -->
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="share-btn" onclick="shareResults()">
+                        <span>📤</span> SHARE MY BRAINROT
+                    </button>
+                    <button class="retry-btn" onclick="retryQuiz()">
+                        <span>🔄</span> RETAKE QUIZ
+                    </button>
+                </div>
+
+                <!-- Premium Upsell -->
+                <div class="premium-card" id="premiumCard">
+                    <div class="premium-badge">✨ PREMIUM</div>
+                    <h3>Unlock Deep Brainrot Analysis</h3>
+                    <ul class="premium-features">
+                        <li>🔬 Detailed breakdown by category</li>
+                        <li>📊 Compare with friends</li>
+                        <li>🎯 Personalized recovery plan</li>
+                        <li>🏆 Exclusive badges</li>
+                    </ul>
+                    <button class="premium-btn" onclick="showPremiumModal()">
+                        GET FULL REPORT - $4.99
+                    </button>
+                </div>
+
+                <!-- Email Capture -->
+                <div class="email-capture">
+                    <h3>📬 Get Weekly Brainrot Reports</h3>
+                    <p>Stay updated on the latest internet brain damage</p>
+                    <form class="email-form" onsubmit="captureEmail(event)">
+                        <input type="email" id="emailInput" placeholder="enter your email..." required>
+                        <button type="submit">SUBSCRIBE</button>
+                    </form>
+                    <span class="email-note">No spam. Just certified brainrot content.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Premium Analysis Section -->
+        <section id="premiumAnalysis" class="section">
+            <div class="premium-analysis-container">
+                <div class="premium-header">
+                    <div class="premium-unlock-badge">
+                        <span>💎</span> PREMIUM UNLOCKED
+                    </div>
+                    <h1>Deep Brainrot Analysis</h1>
+                    <p class="premium-subtitle">Your complete brain damage report</p>
+                </div>
+
+                <!-- Overall Score Card -->
+                <div class="analysis-score-card">
+                    <div class="analysis-score-main">
+                        <span class="analysis-score-number" id="analysisScore">0</span>
+                        <span class="analysis-score-percent">%</span>
+                    </div>
+                    <div class="analysis-score-tier">
+                        <span id="analysisTierEmoji">🧠</span>
+                        <span id="analysisTierTitle">LOADING...</span>
+                    </div>
+                    <div class="analysis-comparison">
+                        <span>You're more brainrotted than <strong id="percentileText">0%</strong> of users</span>
+                    </div>
+                </div>
+
+                <!-- Category Breakdown -->
+                <div class="category-breakdown">
+                    <h2>📊 Category Breakdown</h2>
+                    <div class="category-grid" id="categoryGrid">
+                        <!-- Categories populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Brainrot DNA -->
+                <div class="brainrot-dna">
+                    <h2>🧬 Your Brainrot DNA</h2>
+                    <div class="dna-chart" id="dnaChart">
+                        <!-- DNA visualization populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Insights Section -->
+                <div class="insights-section">
+                    <h2>🔮 Personalized Insights</h2>
+                    <div class="insights-grid" id="insightsGrid">
+                        <!-- Insights populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Recovery Plan -->
+                <div class="recovery-plan">
+                    <h2>🌿 Touch Grass Recovery Plan</h2>
+                    <div class="recovery-timeline" id="recoveryTimeline">
+                        <!-- Recovery steps populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Exclusive Badges -->
+                <div class="exclusive-badges">
+                    <h2>🏆 Exclusive Badges Earned</h2>
+                    <div class="badges-showcase" id="badgesShowcase">
+                        <!-- Badges populated by JS -->
+                    </div>
+                </div>
+
+                <!-- History Section -->
+                <div class="history-section">
+                    <h2>📈 Your Brainrot History</h2>
+                    <div class="history-chart" id="historyChart">
+                        <!-- History chart populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="premium-actions">
+                    <button class="download-report-btn" onclick="downloadPDFReport()">
+                        <span>📄</span> DOWNLOAD PDF REPORT
+                    </button>
+                    <button class="share-analysis-btn" onclick="shareAnalysis()">
+                        <span>📤</span> SHARE ANALYSIS
+                    </button>
+                    <button class="retake-btn" onclick="retryQuiz()">
+                        <span>🔄</span> RETAKE QUIZ
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Premium Modal -->
+    <div class="modal-overlay" id="premiumModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePremiumModal()">✕</button>
+            <div class="modal-header">
+                <span class="modal-emoji">🧠💎</span>
+                <h2>Deep Brainrot Analysis</h2>
+            </div>
+            <div class="modal-body">
+                <div class="price-tag">
+                    <span class="price-old">$9.99</span>
+                    <span class="price-new">$4.99</span>
+                    <span class="price-badge">50% OFF</span>
+                </div>
+                <ul class="modal-features">
+                    <li>✓ Complete category breakdown (Skibidi, Sigma, Ohio, etc.)</li>
+                    <li>✓ Historical comparison with past quizzes</li>
+                    <li>✓ Personalized "touch grass" recovery plan</li>
+                    <li>✓ Exclusive profile badges</li>
+                    <li>✓ PDF report download</li>
+                </ul>
+                <button class="modal-cta">
+                    <span>🔓 UNLOCK NOW</span>
+                </button>
+                <p class="modal-disclaimer">One-time purchase. Instant access.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="modal-content share-modal">
+            <button class="modal-close" onclick="closeShareModal()">✕</button>
+            <div class="modal-header">
+                <h2>Share Your Results</h2>
+            </div>
+            <div class="share-preview" id="sharePreview">
+                <div class="share-card">
+                    <div class="share-card-header">BRAINROT INDEX™</div>
+                    <div class="share-card-score" id="shareScore">69%</div>
+                    <div class="share-card-tier" id="shareTier">CERTIFIED BRAINROT</div>
+                    <div class="share-card-footer">brainrotindex.com</div>
+                </div>
+            </div>
+            <div class="share-buttons">
+                <button class="share-option" onclick="shareToTwitter()">
+                    <span>𝕏</span> Twitter/X
+                </button>
+                <button class="share-option" onclick="copyLink()">
+                    <span>🔗</span> Copy Link
+                </button>
+                <button class="share-option" onclick="downloadCard()">
+                    <span>📥</span> Save Image
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage">Link copied!</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
